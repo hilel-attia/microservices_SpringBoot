@@ -1,0 +1,28 @@
+server:
+  port: 8888
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka-server:8761/eureka
+  instance:
+    prefer-ip-address: true
+
+spring:
+  application:
+    name: api-gateway
+  cloud:      
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+
+      routes:
+      
+      - id: reclamation-service
+        uri: lb://reclamation-service
+        predicates:
+        - Path=/api/reclamation**
+        
+    

@@ -1,0 +1,9 @@
+services :
+
+    web:
+        image: 28609002/agence-de-voyage
+        ports:
+           - 8090:8082
+    database :
+        image : redis
+    

@@ -1,0 +1,4 @@
+FROM java:8
+EXPOSE 8090
+ADD target/Agence-de-voyage-client-1.0.jar Agence-voyage.jar
+ENTRYPOINT ["java" , "-jar" , "Agence-voyage.jar" ]

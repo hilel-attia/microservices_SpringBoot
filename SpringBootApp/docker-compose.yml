@@ -1,0 +1,129 @@
+version: "3.9"
+services:
+  eureka-server:
+    build:  /SpringBootApp/EurekaServer
+    ports:
+      - "8761:8761"
+    image: "eureka-server"
+
+  configuration-server:
+    build: /SpringBootApp/configuration-server
+    command: --spring.profiles.active=native
+    environment: 
+      - eureka.client.serviceUrl.defaultZone=http://eureka-server:8761/eureka/
+      - spring.profiles.active=native
+    ports:
+      - "8880:8880"
+    image: "configuration-server"
+
+    depends_on:
+      - eureka-server
+  gateway:
+    build: /SpringBootApp/api-gateway
+    environment: 
+      - eureka.client.serviceUrl.defaultZone=http://eureka-server:8761/eureka/
+    ports:
+      - "8888:8888"
+    image: "api-gateway"
+
+    depends_on:
+      - eureka-server
+  user-service:
+    build: /SpringBootApp/user-service
+    environment: 
+      - eureka.client.serviceUrl.defaultZone=http://eureka-server:8761/eureka/
+      - spring.cloud.config.uri=http://configuration-server:8880
+    ports:
+      - "8084:8084"
+    image: "user-service"
+    depends_on:
+      - eureka-server
+  order-service:
+    build: /SpringBootApp/order-service
+    environment: 
+      - eureka.client.serviceUrl.defaultZone=http://eureka-server:8761/eureka/
+      - spring.cloud.config.uri=http://configuration-server:8880
+    ports:
+      - "8085:8085"
+    image: "order-service"
+    depends_on:
+      - eureka-server
+      - configuration-server
+  event-service:
+    build: /SpringBootApp/event-service
+    environment: 
+      - eureka.client.serviceUrl.defaultZone=http://eureka-server:8761/eureka/
+      - spring.cloud.config.uri=http://configuration-server:8880
+    ports:
+      - "8090:8090"
+    image: "event-service"
+    depends_on:
+      - eureka-server
+      - configuration-server
+  reclamation-service:
+    build: /SpringBootApp/reclamation-service
+    environment: 
+      - eureka.client.serviceUrl.defaultZone=http://eureka-server:8761/eureka/
+      - spring.cloud.config.uri=http://configuration-server:8880
+    ports:
+      - "8091:8091"
+    image: "reclamation-service"
+    depends_on:
+      - eureka-server
+      - configuration-server
+  feedback-service:
+    build: /SpringBootApp/FeedbackService
+    environment: 
+      - eureka.client.serviceUrl.defaultZone=http://eureka-server:8761/eureka/
+      - spring.cloud.config.uri=http://configuration-server:8880
+    ports:
+      - "8092:8092"
+    image: "feedback-service"
+    depends_on:
+      - eureka-server
+      - configuration-server
+  livraison-service:
+    build: /SpringBootApp/LivraisonService
+    environment: 
+      - eureka.client.serviceUrl.defaultZone=http://eureka-server:8761/eureka/
+      - spring.cloud.config.uri=http://configuration-server:8880
+    ports:
+      - "8093:8093"
+    image: "livraison-service"
+    depends_on:
+      - eureka-server
+      - configuration-server
+  product-service:
+    build: /SpringBootApp/ProductService
+    environment: 
+      - eureka.client.serviceUrl.defaultZone=http://eureka-server:8761/eureka/
+      - spring.cloud.config.uri=http://configuration-server:8880
+    ports:
+      - "8087:8087"
+    image: "product-service"
+    depends_on:
+      - eureka-server
+      - configuration-server
+  category-service:
+    build: /SpringBootApp/CategoryService
+    environment: 
+      - eureka.client.serviceUrl.defaultZone=http://eureka-server:8761/eureka/
+      - spring.cloud.config.uri=http://configuration-server:8880
+    ports:
+      - "8086:8086"
+    image: "category-service"
+    depends_on:
+      - eureka-server
+      - configuration-server
+  store-service:
+    build: /SpringBootApp/store-service
+    ports:
+      - "3000:3000"
+    image: "store-service"
+    depends_on:
+      - eureka-server
+
+
+ 
+
+

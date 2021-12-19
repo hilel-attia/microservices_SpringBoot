@@ -1,0 +1,4 @@
+FROM java:8
+EXPOSE 8761
+ADD target/Eureka-Server-deployment-1.0.jar eureka-server.jar
+ENTRYPOINT ["java" , "-jar" , "eureka-server.jar" ]

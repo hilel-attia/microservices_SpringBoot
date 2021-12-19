@@ -1,0 +1,4 @@
+FROM java:8
+EXPOSE 8094
+ADD /target/Hebergement-1.0.jar Hebergement.jar
+ENTRYPOINT ["java","-jar","Hebergement.jar"]
